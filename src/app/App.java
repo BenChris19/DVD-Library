@@ -17,7 +17,7 @@ import ui.UserIOImpl;
 public class App {
 
 	/**
-	 * Main method. Use dependency injection and wire the entire application.
+	 * Main method. Use dependency injection and wire the entire application. Follow MVC tier application
 	 */
 	public static void main(String[] args) {
 		UserIO io = new UserIOImpl();

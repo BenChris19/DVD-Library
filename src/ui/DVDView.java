@@ -1,7 +1,6 @@
 package ui;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import dto.DVD;
@@ -68,8 +67,8 @@ public class DVDView {
 		io.print("Please enter DVD rating, from (0.0-10.0)");
 		double rating = io.readDouble();
 		
-		io.print("Please enter any additional information about the DVD, if there is nothing to say just write \"No answer\"");
-		String note = io.readStringWithNum();
+		io.print("Please enter any additional information about the DVD (You can leave this blank)");
+		String note = io.readAnything();
 		
 		DVD currentDVD = new DVD();
 		currentDVD.setTitle(title);
@@ -86,10 +85,10 @@ public class DVDView {
 	/**
 	 * Display DVD has been successfully created
 	 */
-	public void displayCreateDVDSuccessBanner() {
+	public void displayCreateDVDSuccess() {
 	    io.print("DVD has been successfully created, please press enter to continue");
 	    io.print("*************==================*************");
-	    io.readStringWithNum();
+	    io.readAnything();
 	}
 	
 	/**
@@ -114,11 +113,15 @@ public class DVDView {
 				+"\n");
 			}
 		}
-		io.print("All DVDs were displayed successfully");
+	}
+	
+	/**
+	 * Display success message if all DVDs in the library have been shown.
+	 */
+	public void displayAllDVDShownSuccess() {
+		io.print("All DVDs were displayed successfully, please hit enter to continue");
 		io.print("*************==================*************");
-		
-		io.print("Please type \"continue\" to continue");
-		io.readStringWithNum();
+		io.readAnything();
 	}
 	
 	/**
@@ -146,25 +149,26 @@ public class DVDView {
 			+ "\nStudio: " + dvd.getStudio()
 			+ "\nNotes: " + dvd.getNote();
 			
-			io.print(dvdInfo);
+			io.print(dvdInfo+"\n");
 		}
-		io.print("Please type \"continue\" to continue");
-		io.readStringWithNum();
+		io.print("Please hit enter to continue");
+		io.readAnything();
 		
 		return dvd;
 	}
 	
 	/**
-	 * Returns if the DVD has been succesfully displayed or not
+	 * Returns if the DVD has been successfully displayed or not
 	 * @param dvd
 	 */
-	public void displayDisplayDVDSuccessBanner(DVD dvd) {
-		
+	public void displayDVDResult(DVD dvd) {
 		if(dvd != null) {
 			io.print("DVD was successfully displayed");
+			io.print("*************==================*************\n");
 		}
 		else {
-			io.print("No such DVD found\n");
+			io.print("No such DVD found");
+			io.print("*************==================*************\n");
 		}
 	}
 	
@@ -181,25 +185,23 @@ public class DVDView {
 			for(DVD dvd : DVDList) {
 				io.print(dvd.getTitle());
 			}
+			io.print("");
 		}
-		io.print("\nAll DVD titles were displayed successfully");
-		io.print("*************==================*************");
-		
-		io.print("Please type \"continue\" to continue");
-		io.readStringWithNum();
 	}
 	
 	/**
 	 * Tell user if DVD has been removed or not
 	 * @param dvd the DVD to check
 	 */
-	public void removeDVDSuccessBanner(DVD dvd) {
+	public void displayremoveDVDResult(DVD dvd) {
 		
 		if(dvd != null) {
 			io.print("DVD was removed successfully");
+			io.print("*************==================*************\n");
 		}
 		else {
-			io.print("No such DVD found\n");
+			io.print("No such DVD found");
+			io.print("*************==================*************\n");
 		}
 	}
 	
@@ -215,6 +217,7 @@ public class DVDView {
 	 */
 	public void displayExitMessage() {
 		io.print("Program has exited. End of Program");
+		io.print("*************==================*************");
 	}
 	
 	/**
@@ -223,7 +226,7 @@ public class DVDView {
 	 */
 	public void displayErrorMessage(String errorMsg) {
 		io.print("== Error == ");
-		io.print(errorMsg);
+		io.print(errorMsg+"\n");
 	}
 	
 	/**
@@ -234,6 +237,7 @@ public class DVDView {
 		io.print("Please enter a piece of information related to the DVD");
 		String userInput = null;
 		io.print("You can enter:\n"
+				+ "\n"
 				+ "Title\n"
 				+ "Release date\n"
 				+ "MPAA rating\n"
@@ -255,8 +259,7 @@ public class DVDView {
 		io.print("Please enter your new change that you'd like to make");
 		switch(editInfo.toLowerCase()) {
 			case "release date":
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
-				userInput = io.readLocalDate().format(formatter);
+				userInput = io.readLocalDate().toString();
 				break;
 			case "mpaa rating":
 				userInput = io.readMPA().toString();
@@ -277,13 +280,15 @@ public class DVDView {
 	 * Returns if the DVD info has been changed successfully or unsuccessfully according to user inputs
 	 * @param dvd
 	 */
-	public void displayMakeChangeSuccessBanner(DVD dvd) {
+	public void displayMakeChangeResult(DVD dvd) {
 		if(dvd != null) {
 			io.print("DVD information was changed successfully");
+			io.print("*************==================*************\n");
 		}
 		else {
 			io.print("DVD change was unsuccessful, please make sure that you enter correct DVD "
 					+ "title and correct piece of information");
+			io.print("*************==================*************\n");
 		}
 	}
 }

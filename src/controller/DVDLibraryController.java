@@ -86,7 +86,7 @@ public class DVDLibraryController {
 	private void createDVD() throws DVDLibraryDaoException{
 		DVD newDVD = view.getNewDVDInfo();
 		dao.addDVD(newDVD.getTitle(), newDVD);
-		view.displayCreateDVDSuccessBanner();
+		view.displayCreateDVDSuccess();
 	}
 	
 	/**
@@ -95,6 +95,7 @@ public class DVDLibraryController {
 	 */
 	private void displayAllDVDs() throws DVDLibraryDaoException{
 		view.displayAllDVDList(dao.getAllDVDs());
+		view.displayAllDVDShownSuccess();
 	}
 	
 	/**
@@ -102,9 +103,12 @@ public class DVDLibraryController {
 	 * @throws DVDLibraryDaoException
 	 */
 	private void displayDVDByTitle() throws DVDLibraryDaoException{
-		String DVDtitle = view.DVDTitleRequest();
-		DVD tempDVD = view.displayDVD(dao.getDVD(DVDtitle));
-		view.displayDisplayDVDSuccessBanner(tempDVD);
+		String dvdTitle = view.DVDTitleRequest();
+		DVD dvd = dao.getDVD(dvdTitle);
+		if(dvd!=null) {
+			view.displayDVD(dvd);
+		}
+		view.displayDVDResult(dvd);
 	}
 	
 	/**
@@ -113,6 +117,7 @@ public class DVDLibraryController {
 	 */
 	private void displayDVDTitles() throws DVDLibraryDaoException{
 		view.displayDVDTitles(dao.getAllDVDs());
+		view.displayAllDVDShownSuccess();
 		
 	}
 	
@@ -123,7 +128,7 @@ public class DVDLibraryController {
 	private void removeDVD() throws DVDLibraryDaoException{
 		String title = view.DVDTitleRequest();
 		DVD dvd = dao.removeDVD(title);
-		view.removeDVDSuccessBanner(dvd);
+		view.displayremoveDVDResult(dvd);
 	}
 	
 	/**
@@ -133,10 +138,13 @@ public class DVDLibraryController {
 	private void editDVD() throws DVDLibraryDaoException{
 		
 		String title = view.DVDTitleRequest();
-		String editDVDInfo = view.editDVDInfo();
-		String change = view.getChange(editDVDInfo);
-		DVD dvd = dao.editDVDInformation(title, editDVDInfo, change);
-		view.displayMakeChangeSuccessBanner(dvd);
+		DVD dvd = dao.getDVD(title);
+		if(dvd!=null) {
+			String editDVDInfo = view.editDVDInfo();
+			String change = view.getChange(editDVDInfo);
+			dvd = dao.editDVDInformation(title, editDVDInfo, change);
+		}
+		view.displayMakeChangeResult(dvd);
 	}
 	
 	/**

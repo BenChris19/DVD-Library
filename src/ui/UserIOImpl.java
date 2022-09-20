@@ -163,6 +163,9 @@ public class UserIOImpl implements UserIO{
         return mpa;
 	}
 
+    /**
+	* Read the user's choice of which field they desire to edit
+	*/	
 	@Override
 	public String readOptions() {
         String options = null;
@@ -183,11 +186,31 @@ public class UserIOImpl implements UserIO{
                validInput = true;
            }
            else {
-               this.print(stringInput+" MPAA is not an options on the list!");
+               this.print("Please enter one of the choices shown on the list");
                validInput = false;
            }
         }
          while(!validInput);
         return options;
+	}
+
+    /**
+	* Read if the user has entered any blank spaces
+	*/
+	@Override
+	public String readAnything() {
+        String string = null;
+        boolean validInput = true;
+        do {
+            String stringInput= sc.nextLine();
+            if(stringInput.isBlank()) {
+            	string="*EMPTY*";	//In the case of adding optional note, add *EMPTY* token to text to avoid errors
+            }
+            else {
+            	string=stringInput;
+            	validInput = true;
+            }
+        } while(!validInput);
+        return string;
 	}
 }

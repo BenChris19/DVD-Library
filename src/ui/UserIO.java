@@ -28,4 +28,6 @@ public interface UserIO {
 	public String readOptions();
 	
 	public MPAA readMPA();
+	
+	public String readAnything();
 }

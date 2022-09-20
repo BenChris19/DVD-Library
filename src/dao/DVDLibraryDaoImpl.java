@@ -78,6 +78,7 @@ public class DVDLibraryDaoImpl implements DVDLibraryDao {
 			switch(editField.toLowerCase()) {
 			case "title":
 				dvd.setTitle(change);
+				DVDs.remove(title);
 				break;
 			case "release date":
 				dvd.setReleaseDate(LocalDate.parse(change));
@@ -85,7 +86,7 @@ public class DVDLibraryDaoImpl implements DVDLibraryDao {
 			case "mpaa rating":
 				dvd.setMpaRating(MPAA.valueOf(change));
 				break;
-			case "director name":
+			case "director's name":
 				dvd.setDirectorName(change);
 				break;
 			case "studio":
@@ -101,7 +102,7 @@ public class DVDLibraryDaoImpl implements DVDLibraryDao {
 				dvd=null;		
 			}
 		}
-		if(dvd != null) DVDs.replace(dvd.getTitle(), dvd);
+		if(dvd != null) DVDs.put(dvd.getTitle(), dvd);
 		writeDVD();
 		return dvd;
 		
